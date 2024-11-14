@@ -3,7 +3,7 @@ Based on the gathered information, here is a draft for the `README.md` file:
 ```markdown
 # Diarization
 
-Evaluating pyannote on endangered languages. Exporting segmented Praat TextGrid for linguists.
+Evaluating [`pyannote.audio`](https://github.com/pyannote/pyannote-audio) on endangered languages. Exporting segmented Praat TextGrid for linguists.
 
 ## Table of Contents
 
