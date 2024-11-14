@@ -1,5 +1,3 @@
-Based on the gathered information, here is a draft for the `README.md` file:
-
 ```markdown
 # Diarization
 
