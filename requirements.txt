@@ -1,0 +1,9 @@
+argparse
+pyannote.audio
+torch
+textgrid
+pandas
+librosa
+pyannote.core
+pyannote.metrics
+xml.etree.ElementTree
