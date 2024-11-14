@@ -1,15 +1,8 @@
 ```markdown
-# Diarization
+# Une nouvelle évaluation des capacités multilingues
+des modèles neuronaux pré-entrainés de la parole
 
 Evaluating [`pyannote.audio`](https://github.com/pyannote/pyannote-audio) on endangered languages. Exporting segmented Praat TextGrid for linguists.
-
-## Table of Contents
-
-- [Introduction](#introduction)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Contributors](#contributors)
-- [License](#license)
 
 ## Introduction
 
