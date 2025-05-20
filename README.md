@@ -17,11 +17,17 @@ To clone this repository, run:
 git clone https://github.com/rfclara/diarization.git
 ```
 
-To install the necessary dependencies, run:
+To install the environment, run:
+- [Pixi.sh](https://pixi.sh/latest/)
+```bash
+curl -fsSL https://pixi.sh/install.sh | sh
+```
 
 ```bash
-pip install -r requirements.txt
+pixi install
 ```
+## Permissions
+
 Accept [`pyannote/segmentation-3.0`](https://hf.co/pyannote/segmentation-3.0) user conditions
 
 Accept [`pyannote/speaker-diarization-3.1`](https://hf.co/pyannote/speaker-diarization-3.1) user conditions
@@ -33,12 +39,13 @@ Create access token at [`hf.co/settings/tokens`](https://hf.co/settings/tokens).
 To run the diarization on your audio files, use the following command:
 
 ```bash
-python diarization.py <path_to_wav_file>
+pixi run python src/diarization/diarization.py <path_to_wav_file>
 ```
+
 You can provide the number of speakers in advance (our experiences showed that this may not improve the results):
 
 ```bash
-python diarization.py <path_to_wav_file> --num_speakers <number_of_speakers>
+pixi run python src/diarization/diarization.py <path_to_wav_file> --num_speakers <number_of_speakers>
 ```
 
 You will get a .TextGrid (and an .rttm) segmented files, enjoy!
