@@ -8,9 +8,10 @@ import torchaudio
 """From the audio file, returns the diarization result in RTTM and TextGrid format
 contains the speaker id, start time, end time"""
 
-pipeline = Pipeline.from_pretrained("pyannote/speaker-diarization-3.1",
-                                    use_auth_token="YUR_HUGGINGFACE_TOKEN",)
-
+pipeline = Pipeline.from_pretrained(
+    "pyannote/speaker-diarization-3.1",
+    use_auth_token="YOUR_HUGGINGFACE_TOKEN"
+)
 pipeline.to(torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu"))
 print("Using device:", pipeline.device)
 
@@ -25,6 +26,7 @@ def diarize_audio(audio_file, num_speakers=None):
     with rttm_filename.open("w") as rttm:
         diarization.write_rttm(rttm)
     write_textgrid(diarization, textgrid_filename)
+    return diarization
 
 def write_textgrid(diarization, textgrid_filename):
     tg = textgrid.TextGrid()
