@@ -29,24 +29,22 @@ def diarize_audio(audio_file, num_speakers=None, use_auth_token=None):
     write_textgrid(diarization, textgrid_filename)
     return diarization
 
-def write_textgrid(diarization, textgrid_filename):
+def write_textgrid(diarization, textgrid_filename, min_duration=0.2):
     tg = textgrid.TextGrid()
     tiers = {}
 
-    # Iterate over segments and associated speaker information
     for segment, _, speaker in diarization.itertracks(yield_label=True):
         start = segment.start
         end = segment.end
+        duration = end - start
 
-        # Check if the speaker already has a tier, otherwise create one
-        if speaker not in tiers:
-            tiers[speaker] = textgrid.IntervalTier(name=speaker)
-            tg.append(tiers[speaker])
+        if duration >= min_duration:
+            if speaker not in tiers:
+                tiers[speaker] = textgrid.IntervalTier(name=speaker)
+                tg.append(tiers[speaker])
+            # Set the speaker label as text
+            tiers[speaker].add(start, end, speaker)
 
-        # Add the segment to the corresponding speaker tier
-        tiers[speaker].add(start, end, "")
-
-    # Write the TextGrid to file
     with open(textgrid_filename, 'w') as f:
         tg.write(f)
 
