@@ -1,4 +1,5 @@
 import argparse
+import os
 from pyannote.audio import Pipeline
 from pathlib import Path
 import torch
@@ -8,14 +9,14 @@ import torchaudio
 """From the audio file, returns the diarization result in RTTM and TextGrid format
 contains the speaker id, start time, end time"""
 
-pipeline = Pipeline.from_pretrained(
-    "pyannote/speaker-diarization-3.1",
-    use_auth_token="YOUR_HUGGINGFACE_TOKEN"
-)
-pipeline.to(torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu"))
-print("Using device:", pipeline.device)
+def diarize_audio(audio_file, num_speakers=None, use_auth_token=None):
+    pipeline = Pipeline.from_pretrained(
+        "pyannote/speaker-diarization-3.1",
+        use_auth_token=use_auth_token
+    )
+    pipeline.to(torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu"))
+    print("Using device:", pipeline.device)
 
-def diarize_audio(audio_file, num_speakers=None):
     # Pre-load audio in memory
     waveform, sample_rate = torchaudio.load(audio_file)
     audio_input = {"waveform": waveform, "sample_rate": sample_rate}
@@ -50,8 +51,17 @@ def write_textgrid(diarization, textgrid_filename):
         tg.write(f)
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description='Diarize an audio file, saves the segmented content in rttm and TextGrid formats.')
+    parser = argparse.ArgumentParser(
+        description='Diarize an audio file, saves the segmented content in rttm and TextGrid formats.'
+    )
     parser.add_argument('audio_file', type=str, help='Path to the audio file')
     parser.add_argument('-n', '--num_speakers', type=int, help='Number of speakers to diarize')
+    parser.add_argument('--use_auth_token', type=str, default=None, help='Hugging Face authentication token (or set HF_TOKEN env variable)')
     args = parser.parse_args()
-    diarize_audio(args.audio_file, args.num_speakers)
+
+    # Allow fallback to environment variable
+    token = args.use_auth_token or os.environ.get("HF_TOKEN")
+    if token is None:
+        raise ValueError("You must provide a Hugging Face token via --use_auth_token or the HF_TOKEN environment variable.")
+
+    diarize_audio(args.audio_file, args.num_speakers, use_auth_token=token)
