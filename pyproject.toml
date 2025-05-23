@@ -8,6 +8,9 @@ dependencies = ["pyannote-audio @ git+https://github.com/pyannote/pyannote-audio
 build-backend = "hatchling.build"
 requires = ["hatchling"]
 
+[tool.hatch.metadata]
+allow-direct-references = true
+
 [tool.pixi.workspace]
 channels = ["nvidia", "pytorch", "conda-forge"]
 platforms = ["linux-64", "osx-arm64"]
