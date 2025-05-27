@@ -10,6 +10,7 @@ import torchaudio
 contains the speaker id, start time, end time"""
 
 def diarize_audio(audio_file, num_speakers=None, use_auth_token=None):
+    print(f"{use_auth_token=}")
     pipeline = Pipeline.from_pretrained(
         "pyannote/speaker-diarization-3.1",
         use_auth_token=use_auth_token
