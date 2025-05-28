@@ -17,7 +17,7 @@ def diarize_audio(audio_file, num_speakers=None, use_auth_token=None):
             "pyannote/speaker-diarization-3.1",
             use_auth_token=use_auth_token,
         )
-        print(os.path.expanduser(os.getenv("PYANNOTE_CACHE", "~/.cache/torch/pyannote")))
+        print("CACHE IS :", os.path.expanduser(os.getenv("PYANNOTE_CACHE", "~/.cache/torch/pyannote")))
         print("Pipeline loaded.")
         pipeline.to(torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu"))
         print("Pipeline moved to device:", pipeline.device)
